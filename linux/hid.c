@@ -42,7 +42,7 @@
 #include <linux/version.h>
 #include <linux/input.h>
 #include <libudev.h>
-
+#incliude<linux/kmalloc_sizes.h>
 #include "hidapi.h"
 
 /* Definitions from linux/hidraw.h. Since these are new, some distros
@@ -82,7 +82,8 @@ static __u32 kernel_version = 0;
 
 static hid_device *new_hid_device(void)
 {
-	hid_device *dev = calloc(1, sizeof(hid_device));
+	//hid_device *dev = calloc(1, sizeof(hid_device));
+	hid_device *dev = kmalloc(sizeof(hid_device));
 	dev->device_handle = -1;
 	dev->blocking = 1;
 	dev->uses_numbered_reports = 0;
@@ -436,7 +437,8 @@ struct hid_device_info  HID_API_EXPORT *hid_enumerate(unsigned short vendor_id, 
 			struct hid_device_info *tmp;
 
 			/* VID/PID match. Create the record. */
-			tmp = malloc(sizeof(struct hid_device_info));
+			//tmp = malloc(sizeof(struct hid_device_info));
+			tmp = kmalloc(sizeof(struct hid_device_info));
 			if (cur_dev) {
 				cur_dev->next = tmp;
 			}
